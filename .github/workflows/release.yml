@@ -1,6 +1,11 @@
 name: Release
+# Builds KeepFrame-Setup-x.y.z.exe + portable zip on Windows and publishes them as release vX.Y.Z.
+# Runs when the version in pyproject.toml changes on main, when a v* tag is pushed, or by hand
+# (Actions -> Release -> Run workflow). A version that is already released is not rebuilt on push.
 on:
   push:
+    branches: [main]
+    paths: [pyproject.toml, .github/workflows/release.yml]
     tags: ["v*"]
   workflow_dispatch:
 permissions:
@@ -10,10 +15,27 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Version
+        id: v
+        shell: pwsh
+        run: |
+          $ver = (Select-String -Path pyproject.toml -Pattern '^version\s*=\s*"(.+)"').Matches[0].Groups[1].Value
+          if ("${{ github.ref_type }}" -eq "tag") { $ver = "${{ github.ref_name }}".TrimStart("v") }
+          $exists = git tag --list "v$ver"
+          $go = "true"
+          if ("${{ github.event_name }}" -eq "push" -and "${{ github.ref_type }}" -ne "tag" -and $exists) { $go = "false" }
+          if ($ver -match "dev") { $go = "false" }
+          "ver=$ver" >> $env:GITHUB_OUTPUT
+          "go=$go" >> $env:GITHUB_OUTPUT
+          "version $ver -> build: $go"
       - uses: actions/setup-python@v5
+        if: steps.v.outputs.go == 'true'
         with:
           python-version: "3.12"
       - name: Export AI model (DINOv2-small, Apache-2.0)
+        if: steps.v.outputs.go == 'true'
         shell: pwsh
         run: |
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
@@ -21,12 +43,16 @@ jobs:
           python tools/export_dinov2_onnx.py
           python -m pip uninstall -y torch transformers
       - name: Install
+        if: steps.v.outputs.go == 'true'
         run: python -m pip install -e ".[gui,ai,raw,win,build,dev]"
       - name: Test
+        if: steps.v.outputs.go == 'true'
         run: pytest -q
       - name: Build exe
+        if: steps.v.outputs.go == 'true'
         run: pyinstaller packaging/keepframe.spec --noconfirm --clean
       - name: Check bundle
+        if: steps.v.outputs.go == 'true'
         shell: pwsh
         run: |
           if (-not (Test-Path dist\KeepFrame\KeepFrame.exe)) { throw "exe missing" }
@@ -34,10 +60,10 @@ jobs:
           if (-not $m) { throw "AI model not bundled" }
           $m | ForEach-Object { "$($_.FullName) $([math]::Round($_.Length/1MB,1)) MB" }
       - name: Installer
+        if: steps.v.outputs.go == 'true'
         shell: pwsh
         run: |
-          $ver = (python -c "import keepframe; print(keepframe.__version__)").Trim()
-          if ("${{ github.ref_type }}" -eq "tag") { $ver = "${{ github.ref_name }}".TrimStart("v") }
+          $ver = "${{ steps.v.outputs.ver }}"
           $iscc = Get-ChildItem "C:\Program Files*\Inno Setup*\ISCC.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $iscc) {
             choco install innosetup -y --no-progress
@@ -47,9 +73,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "ISCC failed" }
           Compress-Archive -Path dist\KeepFrame\* -DestinationPath dist\KeepFrame-portable.zip
       - uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+        if: steps.v.outputs.go == 'true'
         with:
-          name: KeepFrame ${{ github.ref_name }}
+          tag_name: v${{ steps.v.outputs.ver }}
+          target_commitish: ${{ github.sha }}
+          name: KeepFrame v${{ steps.v.outputs.ver }}
           body_path: .github/release-notes.md
           generate_release_notes: true
           files: |
