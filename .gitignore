@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+*.db
+*.db-wal
+*.db-shm
+_keepframe_quarantine/
+
+# Model files are large: download with tools/download_models.py (or attach to Releases)
+src/keepframe/models/*.onnx
+src/keepframe/models/*.task
+src/keepframe/i18n/*.qm
+.venv-build/
+.venv-model/
+dist/
+build/
+*.spec.bak
+tools/get_model.log
+*.tmp.onnx

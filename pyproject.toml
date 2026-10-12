@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keepframe"
+version = "0.1.0.dev0"
+description = "Find and safely cull duplicate and similar photos (bursts, same-angle shots) locally with AI."
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10"
+authors = [{ name = "Ömer Şükrü Bektaş" }]
+keywords = ["photos", "duplicates", "similar-images", "burst", "culling", "dinov2"]
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Graphics",
+]
+dependencies = [
+  "numpy>=1.26",
+  "pillow>=10.3",
+  "pillow-heif>=0.18",
+  "opencv-python-headless>=4.9",
+  "send2trash>=1.8",
+]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.7"]
+ai = ["onnxruntime-directml>=1.18; sys_platform == 'win32'", "onnxruntime>=1.18; sys_platform != 'win32'"]
+cuda = ["onnxruntime-gpu>=1.20"]
+raw = ["rawpy>=0.21"]
+index = ["usearch>=2.12"]
+hash = ["pdqhash>=0.2"]
+faces = ["mediapipe>=0.10"]
+win = ["pywin32>=306; sys_platform == 'win32'"]
+build = ["pyinstaller>=6.6"]
+dev = ["pytest>=8", "ruff>=0.5", "piexif>=1.1"]
+all = ["keepframe[gui,ai,raw,win]"]
+
+[project.scripts]
+keepframe-cli = "keepframe.cli:main"
+
+[project.gui-scripts]
+keepframe = "keepframe.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+keepframe = ["models/*.onnx", "models/*.task", "models/*.md", "i18n/*.qm", "ui/*.png", "ui/*.svg"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["B023"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/keepframe/ui/theme.py" = ["E501"]
+"src/keepframe/ui/i18n.py" = ["E501"]
+"src/keepframe/ui/icons.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
