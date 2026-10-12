@@ -7,9 +7,19 @@
 compare them side by side, and removes the ones **you** choose. Nothing is ever deleted
 permanently.
 
+**[⬇ Download for Windows](https://github.com/omerbek/keepframe/releases/latest)** (no Python needed) ·
 [Türkçe](README.tr.md) · [Architecture](ARCHITECTURE.md)
 
-> Status: **early development (0.1.0.dev0)**. Try it on a copy of your photos first.
+> Status: **0.1.0, first public release**. Try it on a copy of your photos first.
+
+<p align="center"><img src="docs/promo/card1_hero.png" alt="KeepFrame review screen"></p>
+
+<details><summary><b>More screenshots</b></summary>
+
+<img src="docs/promo/card2_how.png" alt="How it works">
+<img src="docs/promo/card3_compare.png" alt="Side-by-side compare">
+<img src="docs/promo/card4_safe.png" alt="Safe by design">
+</details>
 
 ## Features
 

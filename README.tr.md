@@ -7,9 +7,12 @@ açıdan tekrar çekilen kareler) yerel yapay zekâ ile bulan, yan yana karşıl
 yalnızca **sizin** seçtiklerinizi kaldıran ücretsiz, açık kaynak bir Windows uygulaması. Hiçbir
 dosya kalıcı olarak silinmez.
 
+**[⬇ Windows için indir](https://github.com/omerbek/keepframe/releases/latest)** (Python gerekmez) ·
 [English](README.md) · [Mimari](docs/ARCHITECTURE.tr.md)
 
-> Durum: **erken geliştirme (0.1.0.dev0)**. Önce fotoğraflarınızın bir kopyası üzerinde deneyin.
+> Durum: **0.1.0, ilk genel sürüm**. Önce fotoğraflarınızın bir kopyası üzerinde deneyin.
+
+<p align="center"><img src="docs/promo/card1_hero.png" alt="KeepFrame inceleme ekranı"></p>
 
 ## Özellikler
 
