@@ -52,7 +52,15 @@ yazılır. Böylece değişmemiş bir arşivin yeniden taranması saniyeler sür
 
 ## Kurulum
 
-### Seçenek A: Doğrudan çalıştırın (Python 3.10+ kurulu olmalı)
+### En kolayı: kurulum dosyasını indirin (Python gerekmez)
+1. **[Releases](https://github.com/omerbek/keepframe/releases/latest)** sayfasından
+   **`KeepFrame-Setup-x.y.z.exe`** dosyasını indirin. Kurmadan kullanmak isterseniz
+   `KeepFrame-portable.zip` dosyasını indirin.
+2. Çalıştırın. Yapay zekâ modeli içinde gelir, başka kurulum gerekmez.
+3. Uygulama henüz imzalı olmadığı için Windows SmartScreen *"Windows bilgisayarınızı korudu"*
+   diyebilir: **Ek bilgi → Yine de çalıştır** seçeneğine tıklayın.
+
+### Seçenek A: Kaynaktan çalıştırın (Python 3.10+ kurulu olmalı)
 1. Bu depoyu indirin (Code → Download ZIP) ve zip'i açın.
 2. **`run_keepframe.bat`** dosyasına çift tıklayın. İlk açılışta gerekli her şey kurulur.
 3. İsteğe bağlı, yapay zekâ modu için: **`tools\get_model.bat`** dosyasını bir kez çalıştırın.

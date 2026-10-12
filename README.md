@@ -42,7 +42,14 @@ of an unchanged library takes seconds.
 
 ## Install
 
-### Option A — just run it (Python 3.10+ installed)
+### Easiest — download the installer (no Python needed)
+1. Go to **[Releases](https://github.com/omerbek/keepframe/releases/latest)** and download
+   **`KeepFrame-Setup-x.y.z.exe`** (or `KeepFrame-portable.zip` if you don't want to install).
+2. Run it. The AI model is already included — nothing else to set up.
+3. Windows SmartScreen may say *"Windows protected your PC"* because the app is not code-signed
+   yet: click **More info → Run anyway**.
+
+### Option A — run from source (Python 3.10+ installed)
 1. Download this repository (Code → Download ZIP) and unzip it.
 2. Double-click **`run_keepframe.bat`**. The first start installs everything.
 3. Optional, for the AI mode: double-click **`tools\get_model.bat`** once (downloads ~100 MB, converts the model).

@@ -1,13 +1,16 @@
 ; Inno Setup 6 script. Built automatically by packaging\build_exe.bat when Inno Setup is installed.
 #define AppName "KeepFrame"
+#ifndef AppVersion
 #define AppVersion "0.1.0"
+#endif
 
 [Setup]
 AppId={{501FDE3E-6834-4B16-8754-98075CD66F73}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher=KeepFrame contributors
-AppPublisherURL=https://github.com/
+AppPublisherURL=https://github.com/omerbek/keepframe
+AppSupportURL=https://github.com/omerbek/keepframe/issues
 LicenseFile=..\LICENSE
 DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}

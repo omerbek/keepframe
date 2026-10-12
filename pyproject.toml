@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "keepframe"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Find and safely cull duplicate and similar photos (bursts, same-angle shots) locally with AI."
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
